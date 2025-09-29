@@ -10,9 +10,7 @@ typedef struct{
 } BigBinary;
 
 
-BigBinary somme(BigBinary nb1 , BigBinary nb2) {
 
-}
 
 void afficherBigBinary(BigBinary bigBinary) {
     if (bigBinary.Signe == -1) printf("-");
@@ -35,8 +33,5 @@ BigBinary createBigBinary(int taille) {
 
 
 int main(){
-
-    BigBinary binary;
-    ;
     return 0;
 }
