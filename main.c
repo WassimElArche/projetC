@@ -31,6 +31,16 @@ BigBinary createBigBinary(int taille) {
     return bb;
 }
 
+BigBinary soustractionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
+    
+}
+
+
+
+
+
+
+
 BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     int taille = bigBinary1.taille;
     if (bigBinary2.taille > bigBinary1.taille) {
