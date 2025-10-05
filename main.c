@@ -72,6 +72,7 @@ BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     for (int i = 0 ; i < k ; i++) {
         result.Tdigits[i] = resultat[k- i - 1];
     }
+    free(resultat);
     return result;
 }
 
