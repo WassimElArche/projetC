@@ -27,11 +27,83 @@ BigBinary createBigBinary(int taille) {
     BigBinary bb;
     bb.Tdigits = malloc(taille * sizeof(int));
     bb.taille = taille;
-    bb.Signe =0;
+    bb.Signe = 0;
     return bb;
 }
 
+BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
+    int taille = bigBinary1.taille;
+    if (bigBinary2.taille > bigBinary1.taille) {
+        taille = bigBinary2.taille;
+    }
+    int* resultat = malloc((taille+1) * sizeof(int));
+    int i = bigBinary1.taille -1;
+    int j = bigBinary2.taille -1;
+    int k=0;
+    int retenue = 0;
+    while (i>=0|| j>=0 || retenue) {
+        int bitBigbinary1 = (i>=0) ? bigBinary1.Tdigits[i] : 0;
+        int bitBigBinary2 = (j>=0) ? bigBinary2.Tdigits[j] : 0;
+        int somme = bitBigbinary1 + bitBigBinary2 + retenue;
+        switch (somme){
+            case 0:
+                resultat[k] = 0;
+                retenue = 0;
+                break;
+            case 1:
+                resultat[k] = 1;
+                retenue = 0;
+                break;
+            case 2:
+                resultat[k] = 0;
+                retenue = 1;
+                break;
+            case 3:
+                resultat[k] = 1;
+                retenue = 1;
+                break;
+        }
+        i--;
+        j--;
+        k++;
+    }
+    BigBinary result = createBigBinary(k);
+    result.Signe = 1;
+    for (int i = 0 ; i < k ; i++) {
+        result.Tdigits[i] = resultat[k- i - 1];
+    }
+    return result;
+}
 
-int main(){
+
+int main() {
+    BigBinary nb1 = createBigBinary(4);
+    nb1.Tdigits[0] = 1;
+    nb1.Tdigits[1] = 1;
+    nb1.Tdigits[2] = 1;
+    nb1.Tdigits[3] = 1;
+    nb1.Signe = 1;
+
+    BigBinary nb2 = createBigBinary(2);
+    nb2.Tdigits[0] = 0;
+    nb2.Tdigits[1] = 1;
+    nb2.Signe = 1;
+
+    printf("Binaire 1 : ");
+    afficherBigBinary(nb1);
+
+    printf("Binaire 2 : ");
+    afficherBigBinary(nb2);
+
+    BigBinary resultat = additionBigBinary(nb1, nb2);
+
+    printf("\nRésultat : ");
+    afficherBigBinary(resultat);
+
+    free(nb1.Tdigits);
+    free(nb2.Tdigits);
+    free(resultat.Tdigits);
+
     return 0;
 }
+
