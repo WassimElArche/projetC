@@ -32,12 +32,47 @@ BigBinary createBigBinary(int taille) {
 }
 
 BigBinary soustractionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
-    
+    int taille = bigBinary1.taille;
+    if (bigBinary2.taille > bigBinary1.taille) taille = bigBinary2.taille;
+    int* resultat = malloc((taille+1) * sizeof(int));
+    int i = bigBinary1.taille -1;
+    int j = bigBinary2.taille -1;
+    int k = 0;
+    int retenue = 0;
+    while (i>=0 || j>=0 || retenue) {
+        int bitBigBinary1 = (i>=0) ? bigBinary1.Tdigits[i] : 0;
+        int bitBigBinary2 = (j>=0) ? bigBinary2.Tdigits[j] : 0;
+        int somme = bitBigBinary1 -  bitBigBinary2 + retenue;
+        switch (somme) {
+            case 0:
+                resultat[k] = 0;
+                retenue = 0;
+                break;
+            case 1:
+                resultat[k] = 1;
+                retenue = 0;
+                break;
+            case -1:
+                resultat[k] = 1;
+                retenue = -1;
+                break;
+            case -2:
+                resultat[k] = 0;
+                retenue = -1;
+                break;
+        }
+        i--;
+        j--;
+        k++;
+    }
+    BigBinary result = createBigBinary(k);
+    result.Signe = 1;
+    for (int i = 0 ; i < k ; i++) {
+        result.Tdigits[i] = resultat[k- i - 1];
+    }
+    free(resultat);
+    return result;
 }
-
-
-
-
 
 
 
@@ -88,16 +123,16 @@ BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
 
 
 int main() {
-    BigBinary nb1 = createBigBinary(4);
+    BigBinary nb1 = createBigBinary(3);
     nb1.Tdigits[0] = 1;
     nb1.Tdigits[1] = 1;
     nb1.Tdigits[2] = 1;
-    nb1.Tdigits[3] = 1;
     nb1.Signe = 1;
 
-    BigBinary nb2 = createBigBinary(2);
-    nb2.Tdigits[0] = 0;
-    nb2.Tdigits[1] = 1;
+    BigBinary nb2 = createBigBinary(3);
+    nb2.Tdigits[0] = 1;
+    nb2.Tdigits[1] = 0;
+    nb2.Tdigits[2] = 0;
     nb2.Signe = 1;
 
     printf("Binaire 1 : ");
@@ -106,7 +141,7 @@ int main() {
     printf("Binaire 2 : ");
     afficherBigBinary(nb2);
 
-    BigBinary resultat = additionBigBinary(nb1, nb2);
+    BigBinary resultat = soustractionBigBinary(nb1, nb2);
 
     printf("\nRésultat : ");
     afficherBigBinary(resultat);
