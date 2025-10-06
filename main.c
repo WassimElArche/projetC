@@ -187,12 +187,12 @@ int main() {
     printf("Veuillez saisir le premier nombre binaire ");
     scanf("%s" , nb1);
 
-    BigBinary nombre1 = creeBigBinaryDepuisChaine(*nb1);
+    BigBinary nombre1 = creeBigBinaryDepuisChaine(nb1);
 
     char* nb2[100];
     printf("Veuillez saisir le deuxieme nombre binaire ");
     scanf("%s" , nb2);
-    BigBinary nombre2 = creeBigBinaryDepuisChaine(*nb2);
+    BigBinary nombre2 = creeBigBinaryDepuisChaine(nb2);
 
     BigBinary resultat = additionBigBinary(nombre1, nombre2);
 
