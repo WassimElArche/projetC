@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define BASE 2
 
 typedef struct{
@@ -10,7 +11,42 @@ typedef struct{
 } BigBinary;
 
 
+BigBinary creeBigBinaryDepuisChaine(const char *chaine) {
+    BigBinary nb;
+    int n = strlen(chaine);
+    nb.taille = 0;
+    for (int i = 0; i < n; i++) {
+        if (chaine[i] == '1' || chaine[i] == '0') {
+            nb.taille++;
+        }
+    }
+    nb.Tdigits = malloc(nb.taille * sizeof(int));
+    nb.Signe = 1;
+    int index = 0;
+    int tousZero =1;
+    for (int i = 0; i < nb.taille; i++) {
+        if (chaine[i] == '1' || chaine[i] == '0') {
+            nb.Tdigits[index] = chaine[i] - '0';
+        }
+        if (nb.Tdigits[index]) tousZero = 0;
+        index++;
+    }
+    if (tousZero) nb.Signe = 0;
+    return nb;
 
+}
+
+
+BigBinary initBigBinary(int taille , int signe ) {
+    BigBinary nb;
+    nb.taille = taille;
+    nb.Signe = signe;
+    for (int i = 0; i < nb.taille; i++) {
+        nb.Tdigits[i] = 0;
+    }
+    return nb;
+
+}
 
 void afficherBigBinary(BigBinary bigBinary) {
     if (bigBinary.Signe == -1) printf("-");
@@ -31,12 +67,17 @@ BigBinary createBigBinary(int taille) {
     return bb;
 }
 
+int inferieurBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
+
+}
 
 
 
-
-void libereBigBinary(BigBinary bb) {
-    free(bb.Tdigits);
+void libereBigBinary(BigBinary *bb) {
+    free(bb->Tdigits);
+    bb->Tdigits = NULL;
+    bb->taille = 0;
+    bb->Signe = 0;
 }
 
 int egaliteBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
@@ -150,8 +191,8 @@ int main() {
 
     BigBinary nb2 = createBigBinary(3);
     nb2.Tdigits[0] = 1;
-    nb2.Tdigits[1] = 0;
-    nb2.Tdigits[2] = 0;
+    nb2.Tdigits[1] = 1;
+    nb2.Tdigits[2] = 1;
     nb2.Signe = 1;
 
     printf("Binaire 1 : ");
@@ -163,7 +204,7 @@ int main() {
     BigBinary resultat = soustractionBigBinary(nb1, nb2);
 
     printf("\nRésultat : ");
-    afficherBigBinary(resultat);
+    printf("%d",egaliteBigBinary(nb1, nb2));
 
     free(nb1.Tdigits);
     free(nb2.Tdigits);
