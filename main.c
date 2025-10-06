@@ -31,6 +31,25 @@ BigBinary createBigBinary(int taille) {
     return bb;
 }
 
+
+
+
+
+void libereBigBinary(BigBinary bb) {
+    free(bb.Tdigits);
+}
+
+int egaliteBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
+    if (bigBinary1.taille != bigBinary2.taille || bigBinary1.Signe != bigBinary2.Signe) return 0;
+    int valBool = 1;
+    for (int i = 0; i < bigBinary1.taille; i++) {
+        if (bigBinary1.Tdigits[i] != bigBinary2.Tdigits[i]) valBool =  0;
+    }
+    return valBool;
+}
+
+
+
 BigBinary soustractionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     int taille = bigBinary1.taille;
     if (bigBinary2.taille > bigBinary1.taille) taille = bigBinary2.taille;
