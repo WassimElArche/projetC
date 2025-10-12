@@ -68,7 +68,15 @@ BigBinary createBigBinary(int taille) {
 }
 
 int inferieurBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
-
+    if (bigBinary1.Signe < bigBinary2.Signe) return 1;
+    if (bigBinary1.Signe > bigBinary2.Signe) return 0;
+    if (bigBinary1.taille < bigBinary2.taille) return 1;
+    if (bigBinary1.taille > bigBinary2.taille) return 0;
+    for (int i = 0; i < bigBinary1.taille; i++) {
+        if (bigBinary1.Tdigits[i] < bigBinary2.Tdigits[i]) return 1;
+        if (bigBinary1.Tdigits[i] > bigBinary2.Tdigits[i]) return 0;
+    }
+    return 0;
 }
 
 
@@ -181,27 +189,13 @@ BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     return result;
 }
 
-
 int main() {
-    char* nb1[100];
-    printf("Veuillez saisir le premier nombre binaire ");
-    scanf("%s" , nb1);
+    BigBinary a = creeBigBinaryDepuisChaine("111");
+    BigBinary b = creeBigBinaryDepuisChaine("110");
 
-    BigBinary nombre1 = creeBigBinaryDepuisChaine(nb1);
-
-    char* nb2[100];
-    printf("Veuillez saisir le deuxieme nombre binaire ");
-    scanf("%s" , nb2);
-    BigBinary nombre2 = creeBigBinaryDepuisChaine(nb2);
-
-    BigBinary resultat = additionBigBinary(nombre1, nombre2);
-
-    printf("\nRésultat : ");
-    afficherBigBinary(resultat);
-
-    free(nombre1.Tdigits);
-    free(nombre2.Tdigits);
-    free(resultat.Tdigits);
+    printf("%d a inferieur a a b ?", inferieurBigBinary(a, b));
+    libereBigBinary(&a);
+    libereBigBinary(&b);
 
     return 0;
 }
