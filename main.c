@@ -11,6 +11,8 @@ typedef struct{
 } BigBinary;
 
 
+
+
 BigBinary creeBigBinaryDepuisChaine(const char *chaine) {
     BigBinary nb;
     int n = strlen(chaine);
@@ -70,8 +72,6 @@ BigBinary createBigBinary(int taille) {
 int inferieurBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     if (bigBinary1.Signe < bigBinary2.Signe) return 1;
     if (bigBinary1.Signe > bigBinary2.Signe) return 0;
-    if (bigBinary1.taille < bigBinary2.taille) return 1;
-    if (bigBinary1.taille > bigBinary2.taille) return 0;
     for (int i = 0; i < bigBinary1.taille; i++) {
         if (bigBinary1.Tdigits[i] < bigBinary2.Tdigits[i]) return 1;
         if (bigBinary1.Tdigits[i] > bigBinary2.Tdigits[i]) return 0;
@@ -189,11 +189,33 @@ BigBinary additionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     return result;
 }
 
-int main() {
-    BigBinary a = creeBigBinaryDepuisChaine("111");
-    BigBinary b = creeBigBinaryDepuisChaine("110");
+BigBinary BigBinary_PGCD(BigBinary a , BigBinary b){
+    BigBinary u, v;
+    if (egaliteBigBinary(a , b) == 1) return a;
+    if (inferieurBigBinary(a,b) == 1) {
+        u = b;
+        v = a;
+    }
+    else {
+        u = a;
+        v = b;
+    }
+    while (!egaliteBigBinary(u,v)) {
+        if (inferieurBigBinary(u,v) == 0) {
+            u = soustractionBigBinary(u,v);
+        }
+        else {
+            v = soustractionBigBinary(v,u);
+        }
+    }
+    return u;
+}
 
-    printf("%d a inferieur a a b ?", inferieurBigBinary(a, b));
+int main() {
+    BigBinary a = creeBigBinaryDepuisChaine("1010");
+    BigBinary b = creeBigBinaryDepuisChaine("10");
+
+    afficherBigBinary(BigBinary_PGCD(a, b));
     libereBigBinary(&a);
     libereBigBinary(&b);
 
