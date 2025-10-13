@@ -97,7 +97,9 @@ int egaliteBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     return valBool;
 }
 
-
+int maxTaille(int a , int b) {
+    return a > b ? a : b;
+}
 
 BigBinary soustractionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     int taille = bigBinary1.taille;
@@ -105,6 +107,12 @@ BigBinary soustractionBigBinary(BigBinary bigBinary1 , BigBinary bigBinary2) {
     int* resultat = malloc((taille+1) * sizeof(int));
     int i = bigBinary1.taille -1;
     int j = bigBinary2.taille -1;
+    if (i != j) {
+        int tailleTemporaire = maxTaille(bigBinary1.taille , bigBinary2.taille);
+        while (1==2) {
+            // A TERMINER
+        }
+    }
     int k = 0;
     int retenue = 0;
     while (i>=0 || j>=0 || retenue) {
