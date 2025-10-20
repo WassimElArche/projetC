@@ -219,11 +219,27 @@ BigBinary BigBinary_PGCD(BigBinary a , BigBinary b){
     return u;
 }
 
-int main() {
-    BigBinary a = creeBigBinaryDepuisChaine("1010");
-    BigBinary b = creeBigBinaryDepuisChaine("10");
+BigBinary BigBinary_mod(BigBinary a , BigBinary b) {
+    if (a.taille == 0) return b;
+    if (b.taille == 0) return a;
+    BigBinary result = createBigBinary(a.taille);
+    
 
-    afficherBigBinary(BigBinary_PGCD(a, b));
+
+}
+
+int main() {
+    char nb1[20] , nb2[20];
+    printf("Entrez le premier entier");
+    scanf("%s" , nb1);
+
+    printf("Entrez le premier entier");
+    scanf("%s" , nb2);
+    BigBinary a = creeBigBinaryDepuisChaine(nb1);
+    BigBinary b = creeBigBinaryDepuisChaine(nb2);
+
+    afficherBigBinary(a);
+    afficherBigBinary(b);
     libereBigBinary(&a);
     libereBigBinary(&b);
 
